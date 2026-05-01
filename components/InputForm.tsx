@@ -14,7 +14,7 @@ interface TripFormData {
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
-const FORMSPREE_ENDPOINT = "https://formspree.io/";
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xykoyozj";
 
 const inputClass =
   "w-full px-4 py-3 border border-gray-200 rounded-lg text-foreground placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-shadow bg-white";
