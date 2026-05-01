@@ -1,67 +1,70 @@
-'use client'
+"use client";
 
-import { useState, type FormEvent, type ChangeEvent } from 'react'
+import { useState, type FormEvent, type ChangeEvent } from "react";
 
 interface TripFormData {
-  destination: string
-  startDate: string
-  endDate: string
-  budget: string
-  travelStyle: string
-  travelers: string
-  email: string
+  destination: string;
+  startDate: string;
+  endDate: string;
+  budget: string;
+  travelStyle: string;
+  travelers: string;
+  email: string;
 }
 
-type FormStatus = 'idle' | 'submitting' | 'success' | 'error'
+type FormStatus = "idle" | "submitting" | "success" | "error";
 
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/PLACEHOLDER'
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xykoyozj";
 
 const inputClass =
-  'w-full px-4 py-3 border border-gray-200 rounded-lg text-foreground placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-shadow bg-white'
+  "w-full px-4 py-3 border border-gray-200 rounded-lg text-foreground placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-shadow bg-white";
 
-const labelClass = 'block text-sm font-medium text-foreground mb-1.5'
+const labelClass = "block text-sm font-medium text-foreground mb-1.5";
 
 export default function InputForm() {
   const [form, setForm] = useState<TripFormData>({
-    destination: 'Bangkok, Thailand',
-    startDate: '',
-    endDate: '',
-    budget: '',
-    travelStyle: '',
-    travelers: '',
-    email: '',
-  })
-  const [status, setStatus] = useState<FormStatus>('idle')
+    destination: "Bangkok, Thailand",
+    startDate: "",
+    endDate: "",
+    budget: "",
+    travelStyle: "",
+    travelers: "",
+    email: "",
+  });
+  const [status, setStatus] = useState<FormStatus>("idle");
 
   function handleChange(
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ): void {
-    const { name, value } = e.target
-    setForm((prev) => ({ ...prev, [name]: value }))
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
   }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>): Promise<void> {
-    e.preventDefault()
-    setStatus('submitting')
+    e.preventDefault();
+    setStatus("submitting");
 
     try {
       const res = await fetch(FORMSPREE_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
         body: JSON.stringify(form),
-      })
+      });
 
       if (res.ok) {
-        setStatus('success')
+        setStatus("success");
       } else {
-        setStatus('error')
+        setStatus("error");
       }
     } catch {
-      setStatus('error')
+      setStatus("error");
     }
   }
 
-  if (status === 'success') {
+  if (status === "success") {
     return (
       <section id="form" className="py-12 md:py-20 px-6">
         <div className="max-w-[600px] mx-auto text-center">
@@ -85,13 +88,13 @@ export default function InputForm() {
             You&apos;re on the list!
           </h2>
           <p className="text-gray-500">
-            We&apos;ll send your Bangkok trip plan to{' '}
-            <span className="font-medium text-foreground">{form.email}</span>{' '}
+            We&apos;ll send your Bangkok trip plan to{" "}
+            <span className="font-medium text-foreground">{form.email}</span>{" "}
             within a few minutes.
           </p>
         </div>
       </section>
-    )
+    );
   }
 
   return (
@@ -235,7 +238,7 @@ export default function InputForm() {
             />
           </div>
 
-          {status === 'error' && (
+          {status === "error" && (
             <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-3">
               Something went wrong. Please try again.
             </p>
@@ -243,12 +246,12 @@ export default function InputForm() {
 
           <button
             type="submit"
-            disabled={status === 'submitting'}
+            disabled={status === "submitting"}
             className="w-full bg-primary text-white py-4 rounded-lg font-semibold text-base hover:bg-primary-dark transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            {status === 'submitting'
-              ? 'Generating your plan…'
-              : 'Generate my trip plan →'}
+            {status === "submitting"
+              ? "Generating your plan…"
+              : "Generate my trip plan →"}
           </button>
 
           <p className="text-center text-xs text-gray-500">
@@ -257,5 +260,5 @@ export default function InputForm() {
         </form>
       </div>
     </section>
-  )
+  );
 }
